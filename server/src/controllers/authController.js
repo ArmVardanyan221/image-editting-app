@@ -39,7 +39,7 @@ const createToken = (id, username) => {
   })
 }
 
-const signup_get = function(req, res) {
+const signup_get = function (req, res) {
   res.send("HELLO");
 }
 
@@ -47,21 +47,43 @@ const signup_post = async function (req, res) {
   const { username, password } = req.body;
   console.log(username);
   try {
-    
+
     const user = await User.create({ username, password });
     // console.log(user);
     const token = createToken(user._id, username);
-    
+
     res.cookie("token", token, { httpOnly: true, maxAge: maxAge * 1000 });
 
     res.status(201).json({ user: user });
 
   } catch (error) {
-    
+
     const errors = handleErrors(error);
     // console.log(errors);
     res.status(500).json({ errors });
   }
 }
 
-export default { signup_post, signup_get }
+const login_post = async function (req, res) {
+  const { username, password } = req.body;
+  try {
+    const user = await User.login(username, password);
+
+    const token = createToken(user._id, username);
+
+    res.cookie(
+      "token",
+      token,
+      { httpOnly: true, maxAge: maxAge * 1000 }
+    );
+
+    res.status(200).json({ user: user._id })
+
+  } catch (error) {
+    const errors = handleErrors(error);
+    res.status(500).json({ message: errors });
+  }
+
+}
+
+export default { signup_post, signup_get, login_post }

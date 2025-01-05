@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import "./register.css"
-import { redirect } from 'react-router-dom';
 function Register() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
