@@ -22,11 +22,6 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Environment files
-.env
-.env.local
-.env.*.local
-
 # Next.js build output (if using Next.js for React)
 .next/
 
